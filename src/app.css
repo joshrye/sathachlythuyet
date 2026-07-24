@@ -1,0 +1,6 @@
+* { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+html, body { margin: 0; width: 100%; min-width: 760px; height: 100%; min-height: 580px; overflow: hidden; }
+button, select, input { font: inherit; }
+input { user-select: text; -webkit-user-select: text; }
+*:focus { outline: none; }
+button { cursor: pointer; }
