@@ -58,18 +58,14 @@
     aria-describedby="screen-warning-description"
     onkeydown={keepFocusInWarning}
   >
-    <div class="warning-window">
-      <div class="warning-titlebar">Thông báo</div>
-
-      <div class="warning-content">
-        <h1 id="screen-warning-title">Màn hình không phù hợp</h1>
-        <p id="screen-warning-description">
-          Hãy thử dùng màn hình lớn hơn để có trải nghiệm tốt nhất.
-        </p>
-        <button bind:this={continueButton} type="button" onclick={continueAnyway}>
-          Vẫn tiếp tục
-        </button>
-      </div>
+    <div class="warning-content">
+      <h1 id="screen-warning-title">Màn hình không phù hợp</h1>
+      <p id="screen-warning-description">
+        Hãy thử dùng màn hình lớn hơn để có trải nghiệm tốt nhất.
+      </p>
+      <button bind:this={continueButton} type="button" onclick={continueAnyway}>
+        Vẫn tiếp tục
+      </button>
     </div>
   </dialog>
 {/if}
@@ -84,47 +80,20 @@
     position: fixed;
     inset: 0;
     z-index: 100;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    border: 0;
-    min-height: 100dvh;
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
     display: grid;
     place-items: center;
+    margin: 0;
+    padding: clamp(24px, 6vw, 42px);
     overflow: auto;
-    padding: clamp(12px, 4vw, 32px);
+    border: 0;
     background: #dce7ea;
     color: #17212b;
+    text-align: center;
     font-family: "Segoe UI Variable Text", "Segoe UI", Arial, sans-serif;
-  }
-
-  .warning-window {
-    width: min(460px, 100%);
-    max-height: calc(100dvh - 24px);
-    overflow: auto;
-    border: 1px solid #71838a;
-    border-radius: 10px;
-    background: #f3f6f6;
-    box-shadow: 0 18px 48px rgb(28 55 66 / 28%), inset 0 0 0 3px #e5eded;
-  }
-
-  .warning-titlebar {
-    min-height: 34px;
-    display: flex;
-    align-items: center;
-    padding: 6px 11px;
-    border-bottom: 1px solid #b9c5c8;
-    background: #edf2f3;
-    color: #17212b;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .warning-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: clamp(24px, 6vw, 42px);
   }
 
   h1 {
@@ -136,7 +105,7 @@
 
   p {
     max-width: 34ch;
-    margin: 14px 0 28px;
+    margin: 14px auto 28px;
     color: #33434e;
     font-size: 16px;
     line-height: 1.55;
@@ -160,12 +129,6 @@
   }
 
   button:active {
-    transform: translateY(1px);
     background: #123f73;
-  }
-
-  button:focus-visible {
-    outline: 3px solid #17212b;
-    outline-offset: 3px;
   }
 </style>
