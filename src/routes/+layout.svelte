@@ -1,7 +1,10 @@
 <script lang="ts">
 	import '../app.css';
+	import SmallScreenGate from '$lib/components/SmallScreenGate.svelte';
 
 	let { children } = $props();
 </script>
 
-{@render children()}
+<SmallScreenGate>
+	{@render children()}
+</SmallScreenGate>
