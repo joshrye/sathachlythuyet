@@ -12,7 +12,21 @@ export function resolveLicenceTier(licence: string): string {
   return 'A1';
 }
 
-export function getExamDefinition(licence: string): ExamDefinition {
+function shuffle<T>(values: readonly T[], random: () => number): T[] {
+  const shuffled = [...values];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
+export function getExamDefinition(
+  licence: string,
+  random: () => number = Math.random
+): ExamDefinition {
   const tier = examConfig.tiers[resolveLicenceTier(licence)] as Tier;
   const pool = examConfig.pools[tier.reference];
   const chosen: number[] = [];
@@ -28,7 +42,7 @@ export function getExamDefinition(licence: string): ExamDefinition {
         );
 
     let added = 0;
-    for (const id of source) {
+    for (const id of shuffle(source, random)) {
       if (used.has(id)) continue;
       used.add(id);
       chosen.push(id);
