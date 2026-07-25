@@ -23,7 +23,7 @@
   let selections: Selections = $state(questions.map(() => []));
   let readQuestions = $state(questions.map((_, index) => index === 0));
   let secondsLeft = $state(totalSeconds);
-  let timer: ReturnType<typeof setInterval>;
+  let timer: ReturnType<typeof setInterval> | undefined;
   let confirmOpen = $state(false);
   let submitted = $state(false);
 
@@ -32,15 +32,24 @@
   let formattedTime = $derived(formatTime(secondsLeft));
 
   onMount(() => {
-    timer = setInterval(() => {
-      secondsLeft -= 1;
-      if (secondsLeft <= 0) {
-        secondsLeft = 0;
+    const deadline = Date.now() + totalSeconds * 1000;
+
+    const updateTimeLeft = () => {
+      secondsLeft = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      if (secondsLeft === 0) {
         submitExam();
       }
-    }, 1000);
+    };
 
-    return () => clearInterval(timer);
+    timer = setInterval(updateTimeLeft, 1000);
+    document.addEventListener('visibilitychange', updateTimeLeft);
+    window.addEventListener('focus', updateTimeLeft);
+
+    return () => {
+      if (timer !== undefined) clearInterval(timer);
+      document.removeEventListener('visibilitychange', updateTimeLeft);
+      window.removeEventListener('focus', updateTimeLeft);
+    };
   });
 
   function toggleAnswer(index: number, answerId: number): void {
@@ -67,7 +76,7 @@
   function submitExam() {
     if (submitted) return;
     submitted = true;
-    clearInterval(timer);
+    if (timer !== undefined) clearInterval(timer);
     confirmOpen = false;
     oncomplete(
       gradeExam({
