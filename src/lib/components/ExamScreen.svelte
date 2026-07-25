@@ -4,8 +4,8 @@
   import type { ExamResult, Selections, Session } from '$lib/types';
   import CandidateFooter from './exam/CandidateFooter.svelte';
   import ConfirmationDialog from './exam/ConfirmationDialog.svelte';
+  import QuestionDisplay from './exam/QuestionDisplay.svelte';
   import QuestionNavigator from './exam/QuestionNavigator.svelte';
-  import QuestionPane from './exam/QuestionPane.svelte';
 
   interface Props {
     session: Session;
@@ -118,7 +118,7 @@
 <main class="exam-screen">
   <div class="exam-body">
     <section class="exam-left">
-      <QuestionPane question={currentQuestion} />
+      <QuestionDisplay question={currentQuestion} />
 
       <div class="progress-track">
         <div class="progress-fill" style:width={`${progress}%`}></div>
