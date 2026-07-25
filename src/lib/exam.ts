@@ -1,6 +1,8 @@
 import { examConfig, getQuestion } from './data';
 import type { ExamDefinition, ExamResult, Question, Selections, Tier } from './types';
 
+const CRITICAL_CATEGORY = 'tinh_huong_nghiem_trong';
+
 export function resolveLicenceTier(licence: string): string {
   if (examConfig.tiers[licence]) return licence;
 
@@ -31,8 +33,20 @@ export function getExamDefinition(
   const pool = examConfig.pools[tier.reference];
   const chosen: number[] = [];
   const used = new Set<number>();
+  const criticalQuestionIds = pool[CRITICAL_CATEGORY];
 
-  for (const [category, rule] of Object.entries(tier.categories)) {
+  if (!Array.isArray(criticalQuestionIds)) {
+    throw new TypeError('The critical-question pool must be a list of question IDs');
+  }
+
+  const criticalQuestionIdSet = new Set(criticalQuestionIds);
+  const categories = Object.entries(tier.categories);
+  const orderedCategories = [
+    ...categories.filter(([category]) => category === CRITICAL_CATEGORY),
+    ...categories.filter(([category]) => category !== CRITICAL_CATEGORY)
+  ];
+
+  for (const [category, rule] of orderedCategories) {
     const categoryPool = pool[category];
     const source = Array.isArray(categoryPool)
       ? categoryPool
@@ -40,9 +54,13 @@ export function getExamDefinition(
           { length: categoryPool.end - categoryPool.start + 1 },
           (_, index) => categoryPool.start + index
         );
+    const eligibleQuestions =
+      category === CRITICAL_CATEGORY
+        ? source
+        : source.filter((id) => !criticalQuestionIdSet.has(id));
 
     let added = 0;
-    for (const id of shuffle(source, random)) {
+    for (const id of shuffle(eligibleQuestions, random)) {
       if (used.has(id)) continue;
       used.add(id);
       chosen.push(id);
@@ -56,16 +74,11 @@ export function getExamDefinition(
     .map((id) => getQuestion(id))
     .filter((question) => question !== undefined)
     .slice(0, tier.total);
-  const criticalQuestionIds = pool.tinh_huong_nghiem_trong;
-
-  if (!Array.isArray(criticalQuestionIds)) {
-    throw new TypeError('The critical-question pool must be a list of question IDs');
-  }
 
   return {
     tier,
     questions,
-    criticalQuestionIds: new Set(criticalQuestionIds)
+    criticalQuestionIds: criticalQuestionIdSet
   };
 }
 
