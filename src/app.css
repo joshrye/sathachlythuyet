@@ -2,5 +2,5 @@
 html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
 button, select, input { font: inherit; }
 input { user-select: text; -webkit-user-select: text; }
-*:focus { outline: none; }
+*:focus { outline: 1px dashed #000000; }
 button { cursor: pointer; }
