@@ -107,9 +107,9 @@
   .question-column > button.read:not(.active):not(.answered) { background: #d8dde0; }
   .question-column > button.answered:not(.active) { background: #51d254; }
   .question-number { width: 30px; flex: 0 0 auto; font-size: 22px; text-align: left; }
-  .answer-checks { flex: 1; min-width: 0; display: flex; align-items: end; justify-content: flex-start; }
+  .answer-checks { flex: 1; min-width: 0; display: flex; align-items: end; justify-content: flex-start; gap: 4px; }
   .check-wrap { display: flex; flex-direction: column; align-items: center; }
   .check-wrap small { height: 11px; font-size: 9px; color: #246a94; line-height: 10px; }
   .question-column > button.active .check-wrap small { color: #a9d5e2; }
-  .check-wrap input { width: 14px; height: 14px; }
+  .check-wrap input { width: 14px; height: 14px; margin: 0; }
 </style>
