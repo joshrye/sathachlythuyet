@@ -11361,7 +11361,7 @@
   },
   {
     "index": 506,
-    "image": "140_1.jpeg",
+    "image": "140_0.jpeg",
     "text": "Theo hướng mũi tên, xe nào được quyền đi trước?",
     "answers": [
       {
@@ -11376,9 +11376,16 @@
       },
       {
         "id": 3,
-        "text": "Xe con (A). Câu 507: Theo hướng mũi tên, những hướng nào xe gắn máy được phép đi?",
+        "text": "Xe con (A).",
         "correct": false
-      },
+      }
+    ]
+  },
+  {
+    "index": 507,
+    "image": "140_1.jpeg",
+    "text": "Theo hướng mũi tên, những hướng nào xe gắn máy được phép đi?",
+    "answers": [
       {
         "id": 1,
         "text": "Cả ba hướng.",
