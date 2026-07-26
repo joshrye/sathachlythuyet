@@ -25,24 +25,26 @@
     width = 260
   }: Props = $props();
   let primaryButton: HTMLButtonElement;
+  let dialog: HTMLDialogElement;
 
-  onMount(() => primaryButton.focus());
+  onMount(() => {
+    dialog.showModal();
+    primaryButton.focus();
+  });
 
-  function handleKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      onclose();
-    }
+  function handleCancel(event: Event): void {
+    event.preventDefault();
+    onclose();
   }
 </script>
 
 <dialog
-  open
+  bind:this={dialog}
   class="message-dialog"
   style:width={`${width}px`}
   aria-labelledby="message-dialog-title"
   aria-describedby="message-dialog-message"
-  onkeydown={handleKeydown}
+  oncancel={handleCancel}
 >
   <div class="dialog-titlebar">
     <span id="message-dialog-title">{title}</span>
@@ -67,6 +69,10 @@
 </dialog>
 
 <style>
+  .message-dialog::backdrop {
+    background: transparent;
+  }
+
   .message-dialog {
     position: fixed;
     top: 50%;

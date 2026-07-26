@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick, type Snippet } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
 
   interface Props {
     children: Snippet;
@@ -8,7 +8,7 @@
   let { children }: Props = $props();
   let invalidViewport = $state(false);
   let dismissed = $state(false);
-  let continueButton = $state<HTMLButtonElement>();
+  let warningDialog = $state<HTMLDialogElement>();
 
   const warningOpen = $derived(invalidViewport && !dismissed);
 
@@ -23,11 +23,15 @@
     dismissed = true;
   }
 
-  function keepFocusInWarning(event: KeyboardEvent): void {
-    if (event.key !== 'Tab') return;
-
+  function handleCancel(event: Event): void {
     event.preventDefault();
-    continueButton?.focus();
+  }
+
+  function handleClose(): void {
+    // The browser can force-close a modal dialog (e.g. repeated Escape
+    // presses) even when cancel is prevented — treat that as a dismissal
+    // so the app never ends up hidden behind a closed dialog.
+    dismissed = true;
   }
 
   onMount(() => {
@@ -38,32 +42,30 @@
   });
 
   $effect(() => {
-    if (!warningOpen) return;
-
-    void tick().then(() => continueButton?.focus());
+    warningDialog?.showModal();
   });
 </script>
 
-<div class="application" inert={warningOpen} aria-hidden={warningOpen}>
+<div class="application" inert={warningOpen}>
   {@render children()}
 </div>
 
 {#if warningOpen}
   <dialog
-    open
+    bind:this={warningDialog}
     class="warning-backdrop"
     role="alertdialog"
-    aria-modal="true"
     aria-labelledby="screen-warning-title"
     aria-describedby="screen-warning-description"
-    onkeydown={keepFocusInWarning}
+    oncancel={handleCancel}
+    onclose={handleClose}
   >
     <div class="warning-content">
       <h1 id="screen-warning-title">Màn hình không phù hợp</h1>
       <p id="screen-warning-description">
         Hãy thử dùng màn hình lớn hơn để có trải nghiệm tốt nhất.
       </p>
-      <button bind:this={continueButton} type="button" onclick={continueAnyway}>
+      <button type="button" onclick={continueAnyway}>
         Vẫn tiếp tục
       </button>
     </div>
