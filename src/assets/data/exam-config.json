@@ -1,8 +1,8 @@
 {
     "pools": {
       "master": {
-        "quy_dinh_quy_tac": { "start": 1, "end": 100 },
-        "van_hoa_dao_duc": { "start": 101, "end": 205 },
+        "quy_dinh_quy_tac": { "start": 1, "end": 180 },
+        "van_hoa_dao_duc": { "start": 181, "end": 205 },
         "ky_thuat_lai_xe": { "start": 206, "end": 263 },
         "cau_tao_sua_chua": { "start": 264, "end": 300 },
         "bao_hieu_duong_bo": { "start": 301, "end": 485 },
