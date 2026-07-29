@@ -10,7 +10,7 @@
   let { question }: Props = $props();
 
   const nativeWidth = 1024;
-  const nativeHeight = 576;
+  const nativeHeight = nativeWidth * (2 / 3);
   let viewport: HTMLDivElement;
   let scaleX = $state(1);
   let scaleY = $state(1);
@@ -47,9 +47,9 @@
 
 <style>
   .question-viewport { width: 100%; min-height: 0; flex: 1 1 0; overflow: hidden; background: white; -webkit-touch-callout: none; }
-  .question-display { width: 1024px; height: 576px; overflow: auto; padding: 0; margin: 0; transform-origin: top left; background: #fff; font-family: "Times New Roman", serif; }
-  .question-display h1 { margin: 0 0 16px; color: #851c21; font-size: 43px; line-height: 1.05; }
-  .question-display ol { margin: 0; padding-left: 1.25em; font-size: 39px; line-height: 1.18; font-weight: 600; }
-  .question-display li { padding-left: 5px; margin-bottom: .15em; }
-  .question-image { display: block; max-width: 720px; max-height: 518px; margin: 24px auto 0; }
+  .question-display { width: 1024px; aspect-ratio: 3 / 2; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; gap: 0; overflow: auto; padding: 0; margin: 0; transform-origin: top left; background: #fff; font-family: "Times New Roman", serif; }
+  .question-display h1 { margin: 0; color: #851c21; font-size: 32px; line-height: 1.05; }
+  .question-display ol { margin: 0; padding: 0; list-style-position: inside; font-size: 30px; line-height: 1.18; }
+  .question-display li { padding: 0; margin: 0; }
+  .question-image { display: block; align-self: flex-start; width: min(720px, 100%); height: 518px; margin: 0; object-fit: contain; object-position: left center; }
 </style>
