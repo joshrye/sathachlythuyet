@@ -47,9 +47,9 @@
 
 <style>
   .question-viewport { width: 100%; min-height: 0; flex: 1 1 0; overflow: hidden; background: white; -webkit-touch-callout: none; }
-  .question-display { width: 1024px; aspect-ratio: 3 / 2; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; gap: 0; overflow: auto; padding: 0; margin: 0; transform-origin: top left; background: #fff; font-family: "Times New Roman", serif; }
+  .question-display { width: 1024px; aspect-ratio: 3 / 2; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; overflow: auto; padding: 10px 30px; margin: 0; transform-origin: top left; background: #fff; font-family: "Times New Roman", serif; }
   .question-display h1 { margin: 0; color: #851c21; font-size: 32px; line-height: 1.05; }
   .question-display ol { margin: 0; padding: 0; list-style-position: inside; font-size: 30px; line-height: 1.18; }
   .question-display li { padding: 0; margin: 0; }
-  .question-image { display: block; align-self: flex-start; width: auto; max-height: 400px; margin: 0; object-fit: contain; object-position: left center; }
+  .question-image { display: block; align-self: flex-start; width: auto; max-height: 50%px; max-width: 80%; margin: 0; object-fit: contain; object-position: left center; }
 </style>
