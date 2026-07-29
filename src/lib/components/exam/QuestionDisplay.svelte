@@ -51,5 +51,5 @@
   .question-display h1 { margin: 0; color: #851c21; font-size: 32px; line-height: 1.05; }
   .question-display ol { margin: 0; padding: 0; list-style-position: inside; font-size: 30px; line-height: 1.18; }
   .question-display li { padding: 0; margin: 0; }
-  .question-image { display: block; align-self: flex-start; width: min(720px, 100%); height: 518px; margin: 0; object-fit: contain; object-position: left center; }
+  .question-image { display: block; align-self: flex-start; width: auto; max-height: 400px; margin: 0; object-fit: contain; object-position: left center; }
 </style>
